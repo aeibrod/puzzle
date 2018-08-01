@@ -1,0 +1,27 @@
+{
+
+	"name": "aeibrod/puzzle",
+	"authors": [
+		{
+			"name": "Aei Brod",
+			"email": "aeibrod@gmail.com"
+		}
+	],
+
+	"autoload": {
+		"psr-4": {
+			"Puzzle\\": "src"
+		}
+	},
+
+	"require": {
+		"psr/http-message": "^1.0",
+		"psr/link": "^1.0",
+		"psr/container": "^1.0"
+	},
+
+	"require-dev": {
+		"squizlabs/php_codesniffer": "^3.3"
+	}
+
+}
