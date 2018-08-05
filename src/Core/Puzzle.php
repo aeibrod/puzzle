@@ -3,7 +3,8 @@
 	namespace Puzzle\Core;
 
 	use Puzzle\Component\Http\Request;
-	use Puzzle\Component\Http\Router;
+
+	use Puzzle\Component\Navigation\Router;
 
 
 	class Puzzle {
