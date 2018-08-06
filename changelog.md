@@ -4,6 +4,7 @@
 
 ### feat
 
+ - **http:** add possibility to configure the stream in `Puzzle\Component\Http\Stream`
  - **navigation:** create navigation component
 
 ### docs

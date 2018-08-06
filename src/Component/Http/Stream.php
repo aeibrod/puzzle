@@ -7,9 +7,37 @@
 
 	class Stream implements StreamInterface {
 
+		// phpcs:disable Generic.WhiteSpace.DisallowSpaceIndent.SpacesUsed
+
+		/** @var string[] */
+		public const READ_MODES = [
+			'r', 'rw', 'r+', 'rb', 'r+b', 'rt', 'r+t',
+			     'wr', 'w+',       'w+b',       'w+t',
+			           'x+',       'x+b',       'x+t',
+			           'c+',       'c+b',       'c+t',
+			           'a+'
+		];
+
+		/** @var string[] */
+		public const WRITE_MODES = [
+			'w', 'wr', 'w+', 'wb', 'w+b', 'wt', 'w+t',
+			     'rw', 'r+',       'r+b',       'r+t',
+			           'x+',       'w+b',       'w+t',
+			           'c+',       'c+b',       'c+t',
+			           'a+'
+		];
+
+		// phpcs:enable
+
 
 		/** @var resource */
-		protected $stream;
+		protected $resource;
+
+		/** @var string */
+		protected $uri;
+
+		/** @var int */
+		protected $size;
 
 		/** @var bool */
 		protected $readable = true;
@@ -21,8 +49,31 @@
 		protected $seekable = true;
 
 
-		public function __construct() {
-			$this->stream = fopen('php://temp', 'r+');
+		/**
+		 * @param resource $resource = null
+		 * @throws InvalidArgumentException Stream must be instantiated with a valid resource
+		 */
+		public function __construct($resource = null) {
+
+			if ($resource === null){
+				$resource = fopen('php://temp', 'r+');
+			}
+
+			if (!is_resource($resource)){
+				throw new \InvalidArgumentException('Stream must be instantiated with a valid resource');
+			}
+
+
+			$meta = stream_get_meta_data($resource);
+			$mode = $meta['mode'];
+
+			$this->readable = in_array($mode, self::READ_MODES);
+			$this->writable = in_array($mode, self::WRITE_MODES);
+			$this->seekable = $meta['seekable'];
+
+			$this->uri = $meta['uri'];
+
+			$this->resource = $resource;
 		}
 
 		public function __destruct() {
@@ -30,13 +81,24 @@
 		}
 
 
+		/**
+		 * @param string $filename
+		 * @param string $mode = 'r+'
+		 * @throws InvalidArgumentException Stream must be instanciated with a valid resource
+		 * @return StreamInterface
+		 */
+		public static function fromFile(string $filename, string $mode = 'r+'): StreamInterface {
+			return new Stream(fopen($filename, $mode));
+		}
+
+
 		public function close(): void {
 
-			if (!isset($this->stream)){
+			if ($this->resource === null){
 				return;
 			}
 
-			fclose($this->stream);
+			fclose($this->resource);
 
 			$this->detach();
 		}
@@ -46,15 +108,17 @@
 		 */
 		public function detach() {
 
-			if ($this->stream === null){
+			if ($this->resource === null){
 				return null;
 			}
 
 
-			$result = $this->stream;
+			$result = $this->resource;
 
-			unset($this->stream);
+			unset($this->resource);
+
 			$this->readable = $this->writable = $this->seekable = false;
+			$this->size = $this->uri = null;
 
 			return $result;
 		}
@@ -64,7 +128,27 @@
 		 * @return ?int
 		 */
 		public function getSize(): ?int {
-			return null;
+
+			if ($this->resource === null){
+				return null;
+			}
+
+			if ($this->size !== null){
+				return $this->size;
+			}
+
+
+			clearstatcache(true, $this->uri);
+
+			$stat = fstat($this->resource);
+
+			if (!isset($stat['size'])){
+				return null;
+			}
+
+			$this->size = $stat['size'];
+
+			return $this->size;
 		}
 
 
@@ -74,11 +158,11 @@
 		 */
 		public function tell(): int {
 
-			if (!isset($this->stream)){
+			if (!isset($this->resource)){
 				throw new \RuntimeException('Stream is detached');
 			}
 
-			$result = ftell($this->stream);
+			$result = ftell($this->resource);
 
 			if ($result === false){
 				throw new \RuntimeException('Unable to get the position of the pointer');
@@ -92,22 +176,22 @@
 		 */
 		public function eof(): bool {
 
-			if (!isset($this->stream)){
+			if (!isset($this->resource)){
 				return false;
 			}
 
-			return feof($this->stream);
+			return feof($this->resource);
 		}
 
 
 		/**
 		 * @param int $length
-		 * @throws RuntimeException
+		 * @throws RuntimeException Stream is detached or not readable
 		 * @return string
 		 */
 		public function read($length): string {
 
-			if (!isset($this->stream)){
+			if (!isset($this->resource)){
 				throw new \RuntimeException('Stream is detached');
 			}
 
@@ -116,7 +200,7 @@
 			}
 
 
-			$result = fread($this->stream, $length);
+			$result = fread($this->resource, $length);
 
 			if ($result === false){
 				throw new \RuntimeException('Unable to read the stream');
@@ -126,12 +210,12 @@
 		}
 
 		/**
-		 * @throws RuntimeException
+		 * @throws RuntimeException Stream is detached or not readable
 		 * @return string
 		 */
 		public function getContents(): string {
 
-			if (!isset($this->stream)){
+			if (!isset($this->resource)){
 				throw new \RuntimeException('Stream is detached');
 			}
 
@@ -140,7 +224,7 @@
 			}
 
 
-			$result = stream_get_contents($this->stream);
+			$result = stream_get_contents($this->resource);
 
 			if ($result === false){
 				throw new \RuntimeException('Unable to read the stream');
@@ -152,12 +236,12 @@
 
 		/**
 		 * @param string $content
-		 * @throws RuntimeException
+		 * @throws RuntimeException Stream is detached or not writable
 		 * @return int
 		 */
 		public function write($content): int {
 
-			if (!isset($this->stream)){
+			if (!isset($this->resource)){
 				throw new \RuntimeException('Stream is detached');
 			}
 
@@ -166,7 +250,8 @@
 			}
 
 
-			$result = fwrite($this->stream, $content);
+			$result = fwrite($this->resource, $content);
+			$this->size = null;
 
 			if ($result === false){
 				throw new \RuntimeException('Unable to write the stream');
@@ -179,11 +264,11 @@
 		/**
 		 * @param int $offset
 		 * @param int $whence = SEEK_SET
-		 * @throws RuntimeException
+		 * @throws RuntimeException Stream is detached or not seekable
 		 */
 		public function seek($offset, $whence = SEEK_SET): void {
 
-			if (!isset($this->stream)){
+			if (!isset($this->resource)){
 				throw new \RuntimeException('Stream is detached');
 			}
 
@@ -192,7 +277,7 @@
 			}
 
 
-			$result = fseek($this->stream, $offset, $whence);
+			$result = fseek($this->resource, $offset, $whence);
 
 			if ($result === -1){
 				throw new \RuntimeException('Unable to seek the stream');
@@ -201,7 +286,7 @@
 
 
 		/**
-		 * @throws RuntimeException
+		 * @throws RuntimeException Stream is detached or not seekable
 		 */
 		public function rewind(): void {
 			$this->seek(0);
@@ -212,13 +297,23 @@
 		 * @return bool
 		 */
 		public function isReadable(): bool {
-			return $this->writable;
+
+			if ($this->resource === null){
+				return false;
+			}
+
+			return $this->readable;
 		}
 
 		/**
 		 * @return bool
 		 */
 		public function isWritable(): bool {
+
+			if ($this->resource === null){
+				return false;
+			}
+
 			return $this->writable;
 		}
 
@@ -226,6 +321,11 @@
 		 * @return bool
 		 */
 		public function isSeekable(): bool {
+
+			if ($this->resource === null){
+				return false;
+			}
+
 			return $this->seekable;
 		}
 
@@ -237,11 +337,11 @@
 		 */
 		public function getMetadata($key = null) {
 
-			if (!isset($this->stream)){
+			if (!isset($this->resource)){
 				return null;
 			}
 
-			$metadata = stream_get_meta_data($this->stream);
+			$metadata = stream_get_meta_data($this->resource);
 
 			if ($key === null){
 				return $metadata;
