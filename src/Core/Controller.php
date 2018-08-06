@@ -23,7 +23,7 @@
 		protected $instancedViews = [];
 
 		/** @var string[] */
-		protected $matches = [];
+		protected $slugs = [];
 
 
 		/**
@@ -77,7 +77,7 @@
 
 
 			$this->model = $model;
-			$this->model->setMatches($this->matches);
+			$this->model->setSlugs($this->slugs);
 			$this->model->onCreate($this->model->getContext(), $this->model->getRequest());
 
 			return $this->model;
@@ -107,7 +107,7 @@
 			}
 
 
-			$view->setMatches($this->matches);
+			$view->setSlugs($this->slugs);
 			$response = $view->onCreate($view->getContext(), $view->getRequest());
 
 			return $response;
@@ -115,10 +115,10 @@
 
 
 		/**
-		 * @param string[] $matches
+		 * @param string[] $slugs
 		 */
-		public function setMatches(array $matches): void {
-			$this->matches = $matches;
+		public function setSlugs(array $slugs): void {
+			$this->slugs = $slugs;
 		}
 
 
@@ -146,8 +146,8 @@
 		/**
 		 * @return string[]
 		 */
-		public function getMatches(): array {
-			return $this->matches;
+		public function getSlugs(): array {
+			return $this->slugs;
 		}
 
 	}

@@ -10,6 +10,7 @@
 ### refactor
 
  - **core:** change lifecycle
+ - **core:** change `matches` keyword to `slugs`
 
 ### docs
 

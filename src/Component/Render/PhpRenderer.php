@@ -25,7 +25,7 @@
 		protected $extensions = [ 'php', 'html', 'htm' ];
 
 		/** @var string[] */
-		protected $matches = [];
+		protected $slugs = [];
 
 
 		/**
@@ -44,7 +44,7 @@
 				$renderer->setModel($from->getModel());
 			}
 
-			$renderer->setMatches($from->getMatches());
+			$renderer->setSlugs($from->getSlugs());
 
 			return $renderer;
 		}
@@ -69,11 +69,11 @@
 		}
 
 		/**
-		 * @param string[] $matches
+		 * @param string[] $slugs
 		 * @return PhpRenderer
 		 */
-		public function setMatches(array $matches): PhpRenderer {
-			$this->matches = $matches;
+		public function setSlugs(array $slugs): PhpRenderer {
+			$this->slugs = $slugs;
 			return $this;
 		}
 
@@ -140,8 +140,8 @@
 		/**
 		 * @return string[]
 		 */
-		public function getMatches(): array {
-			return $this->matches;
+		public function getSlugs(): array {
+			return $this->slugs;
 		}
 
 
@@ -164,8 +164,8 @@
 		/**
 		 * @return PhpRenderer
 		 */
-		public function clearMatches(): PhpRenderer {
-			$this->matches = [];
+		public function clearSlugs(): PhpRenderer {
+			$this->slugs = [];
 			return $this;
 		}
 
@@ -198,7 +198,7 @@
 
 							$context = $this->context;
 							$model   = $this->model;
-							$matches = $this->matches;
+							$slugs = $this->slugs;
 
 							$path = $directory . '/' . $file;
 

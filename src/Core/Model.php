@@ -14,7 +14,7 @@
 		protected $request;
 
 		/** @var string[] */
-		protected $matches = [];
+		protected $slugs = [];
 
 
 		/**
@@ -36,10 +36,10 @@
 
 
 		/**
-		 * @param string[] $matches
+		 * @param string[] $slugs
 		 */
-		public function setMatches(array $matches): void {
-			$this->matches = $matches;
+		public function setSlugs(array $slugs): void {
+			$this->slugs = $slugs;
 		}
 
 
@@ -60,8 +60,8 @@
 		/**
 		 * @return string[]
 		 */
-		public function getMatches(): array {
-			return $this->matches;
+		public function getSlugs(): array {
+			return $this->slugs;
 		}
 
 		/**

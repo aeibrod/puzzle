@@ -43,10 +43,10 @@
 
 		/**
 		 * @param Controller|string $controller
-		 * @param string[] $matches = []
+		 * @param string[] $slugs = []
 		 * @return ?Controller
 		 */
-		public function loadController($controller, array $matches = []): ?Controller {
+		public function loadController($controller, array $slugs = []): ?Controller {
 
 			if (!is_subclass_of($controller, Controller::class)){
 				return null;
@@ -62,7 +62,7 @@
 			}
 
 
-			$controller->setMatches($matches);
+			$controller->setSlugs($slugs);
 			$response = $controller->onCreate($controller->getContext(), $controller->getRequest());
 
 			header('HTTP/' . $response->getProtocolVersion() . ' ' . $response->getStatusCode() . ' ' . $response->getReasonPhrase());
