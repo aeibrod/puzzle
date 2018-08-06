@@ -47,7 +47,7 @@
 		public function match($methods, Route $route, callable $callback): void {
 
 			if ($methods === '*'){
-				$methods = Message::HTTP_METHOD;
+				$methods = Message::HTTP_METHODS;
 			}
 
 			if (is_string($methods)){

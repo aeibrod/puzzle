@@ -118,7 +118,7 @@
 		 */
 		public function withMethod($method): ServerRequestInterface {
 
-			if (!in_array(strtoupper($method), self::HTTP_METHOD)){
+			if (!in_array(strtoupper($method), self::HTTP_METHODS)){
 				throw new \InvalidArgumentException('Invalid HTTP method');
 			}
 

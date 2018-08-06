@@ -11,6 +11,7 @@
 
  - **core:** change lifecycle
  - **core:** change `matches` keyword to `slugs`
+ - **http:** add the final `S` to `HTTP_METHODS` in `Puzzle\Component\Http\Message`
 
 ### docs
 
