@@ -19,6 +19,9 @@
 		/** @var Model */
 		protected $model;
 
+		/** @var View[] */
+		protected $instancedViews = [];
+
 		/** @var string[] */
 		protected $matches = [];
 
@@ -26,14 +29,30 @@
 		/**
 		 * @param Context $context
 		 * @param ServerRequestInterface $request
-		 * @return ResponseInterface
 		 */
-		public function onCreate(Context $context, ServerRequestInterface $request): ResponseInterface {
+		public function onInitialize(Context $context, ServerRequestInterface $request): void {
 			$this->context = $context;
 			$this->request = $request;
-
-			return new Response();
 		}
+
+		public function onDestroy(): void {
+
+			if ($this->model !== null){
+				$this->model->onDestroy();
+			}
+
+			foreach ($this->instancedViews as $view){
+				$view->onDestroy();
+			}
+
+		}
+
+		/**
+		 * @param Context $context
+		 * @param ServerRequestInterface $request
+		 * @return ResponseInterface
+		 */
+		public abstract function onCreate(Context $context, ServerRequestInterface $request): ResponseInterface;
 
 
 		/**
@@ -53,12 +72,13 @@
 
 			if (is_string($model)){
 				$model = new $model();
+				$model->onInitialize($this->context, $this->request);
 			}
 
 
 			$this->model = $model;
 			$this->model->setMatches($this->matches);
-			$this->model->onCreate($this->context, $this->request);
+			$this->model->onCreate($this->model->getContext(), $this->model->getRequest());
 
 			return $this->model;
 		}
@@ -74,7 +94,12 @@
 			}
 
 			if (is_string($view)){
+
 				$view = new $view();
+				$view->onInitialize($this->context, $this->request);
+
+				$this->instancedViews[] = $view;
+
 			}
 
 			if ($this->model !== null){
@@ -83,7 +108,7 @@
 
 
 			$view->setMatches($this->matches);
-			$response = $view->onCreate($this->context, $this->request);
+			$response = $view->onCreate($view->getContext(), $view->getRequest());
 
 			return $response;
 		}

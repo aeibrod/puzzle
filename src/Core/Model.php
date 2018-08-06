@@ -21,10 +21,18 @@
 		 * @param Context $context
 		 * @param ServerRequestInterface $request
 		 */
-		public function onCreate(Context $context, ServerRequestInterface $request): void {
+		public function onInitialize(Context $context, ServerRequestInterface $request): void {
 			$this->context = $context;
 			$this->request = $request;
 		}
+
+		public function onDestroy(): void { }
+
+		/**
+		 * @param Context $context
+		 * @param ServerRequestInterface $request
+		 */
+		public abstract function onCreate(Context $context, ServerRequestInterface $request): void;
 
 
 		/**

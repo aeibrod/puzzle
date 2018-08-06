@@ -23,6 +23,14 @@
 			$this->modules = $modules;
 		}
 
+		public function __destruct() {
+
+			foreach ($this->modules as $module){
+				$module->onDestroy();
+			}
+
+		}
+
 
 		public function run(): void {
 			$this->init();
@@ -43,22 +51,40 @@
 			$this->context->register($request);
 			$this->context->register($router);
 
+
+			$this->initModules();
+		}
+
+		protected function initModules(): void {
+
+			foreach ($this->modules as $key => $module){
+
+				if (!is_subclass_of($module, Module::class)){
+					unset($this->modules[$key]);
+					continue;
+				}
+
+				if (is_string($module)){
+
+					$this->modules[$key] = new $module();
+					$this->modules[$key]->onInitialize($this->context, $this->context->getRequest());
+
+				}
+			}
 		}
 
 		public function load(): void {
 
 			foreach ($this->modules as $module){
 
-				if (is_subclass_of($module, Module::class)){
-
-					if (is_string($module)){
-						$module = new $module();
-					}
-
-					$module->onCreate($this->context, $this->context->getRequest());
-
+				if (!is_subclass_of($module, Module::class)){
+					continue;
 				}
+
+				$module->onCreate($module->getContext(), $module->getRequest());
+
 			}
+
 		}
 
 		public function exec(): void {

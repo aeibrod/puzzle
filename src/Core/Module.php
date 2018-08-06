@@ -13,15 +13,32 @@
 		/** @var ServerRequestInterface */
 		protected $request;
 
+		/** @var Controller[] */
+		protected $instancedControllers = [];
+
 
 		/**
 		 * @param Context $context
 		 * @param ServerRequestInterface $request
 		 */
-		public function onCreate(Context $context, ServerRequestInterface $request): void {
+		public function onInitialize(Context $context, ServerRequestInterface $request): void {
 			$this->context = $context;
 			$this->request = $request;
 		}
+
+		public function onDestroy(): void {
+
+			foreach ($this->instancedControllers as $controller){
+				$controller->onDestroy();
+			}
+
+		}
+
+		/**
+		 * @param Context $context
+		 * @param ServerRequestInterface $request
+		 */
+		public abstract function onCreate(Context $context, ServerRequestInterface $request): void;
 
 
 		/**
@@ -36,12 +53,17 @@
 			}
 
 			if (is_string($controller)){
+
 				$controller = new $controller();
+				$controller->onInitialize($this->context, $this->request);
+
+				$this->instancedControllers[] = $controller;
+
 			}
 
 
 			$controller->setMatches($matches);
-			$response = $controller->onCreate($this->context, $this->request);
+			$response = $controller->onCreate($controller->getContext(), $controller->getRequest());
 
 			header('HTTP/' . $response->getProtocolVersion() . ' ' . $response->getStatusCode() . ' ' . $response->getReasonPhrase());
 

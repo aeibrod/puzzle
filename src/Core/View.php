@@ -26,14 +26,20 @@
 		/**
 		 * @param Context $context
 		 * @param ServerRequestInterface $request
-		 * @return ResponseInterface
 		 */
-		public function onCreate(Context $context, ServerRequestInterface $request): ResponseInterface {
+		public function onInitialize(Context $context, ServerRequestInterface $request): void {
 			$this->context = $context;
 			$this->request = $request;
-
-			return new Response();
 		}
+
+		public function onDestroy(): void { }
+
+		/**
+		 * @param Context $context
+		 * @param ServerRequestInterface $request
+		 * @return ResponseInterface
+		 */
+		public abstract function onCreate(Context $context, ServerRequestInterface $request): ResponseInterface;
 
 
 		/**
