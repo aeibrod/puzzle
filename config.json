@@ -1,0 +1,39 @@
+{
+
+	"app": {
+		"name": "",
+		"description": "",
+		"charset": "utf-8"
+	},
+
+	"environment": {
+		"development": "development",
+		"production": "production",
+		"env": "production"
+	},
+
+	"puzzle": {
+
+		"version": "0.0.2",
+
+		"format": {
+			"configuration": [ "json", "ini", "php" ],
+			"template": [ "html", "php" ]
+		},
+
+		"requirement": {
+			"psr/http-message": "^1.0",
+			"psr/container": "^1.0",
+			"psr/link": "^1.0",
+			"php": ">=7.1"
+		},
+
+		"dependencies": [
+			"psr/http-message",
+			"psr/container",
+			"psr/link"
+		]
+
+	}
+
+}

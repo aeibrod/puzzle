@@ -1,9 +1,10 @@
 # Changelog
 
-## 0.0.2 (2018-08-?)
+## Version 0.0.2 (August ?, 2018)
 
 ### feat
 
+ - make configuration more flexible
  - **http:** add possibility to configure the stream in `Puzzle\Component\Http\Stream`
  - **navigation:** create navigation component
 
@@ -17,6 +18,6 @@
 
  - add changelog
 
-## 0.0.1 (2018-08-1)
+## Version 0.0.1 (2018-08-1)
 
 First commit
