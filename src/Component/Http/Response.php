@@ -61,7 +61,7 @@
 		/**
 		 * @param int $code
 		 * @param string $reasonPhrase = ''
-		 * @throws InvalidArgumentException Status code does not exist
+		 * @throws \InvalidArgumentException Status code does not exist
 		 * @return ResponseInterface
 		 */
 		public function withStatus($code, $reasonPhrase = ''): ResponseInterface {

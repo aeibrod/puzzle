@@ -32,6 +32,9 @@
 		}
 
 
+		/**
+		 * @throws \InvalidArgumentException Could not initialize a class that not inherit from Module
+		 */
 		public function run(): void {
 			$this->init();
 			$this->load();
@@ -39,6 +42,9 @@
 		}
 
 
+		/**
+		 * @throws \InvalidArgumentException Could not initialize a class that not inherit from Module
+		 */
 		public function init(): void {
 
 			$this->context = new Context();
@@ -55,13 +61,15 @@
 			$this->initModules();
 		}
 
+		/**
+		 * @throws \InvalidArgumentException Could not initialize a class that not inherit from Module
+		 */
 		protected function initModules(): void {
 
 			foreach ($this->modules as $key => $module){
 
 				if (!is_subclass_of($module, Module::class)){
-					unset($this->modules[$key]);
-					continue;
+					throw new \InvalidArgumentException('Could not initialize a class that not inherit from Module');
 				}
 
 				if (is_string($module)){
@@ -73,12 +81,15 @@
 			}
 		}
 
+		/**
+		 * @throws \InvalidArgumentException Could not load a class that not inherit from Module
+		 */
 		public function load(): void {
 
 			foreach ($this->modules as $module){
 
 				if (!is_subclass_of($module, Module::class)){
-					continue;
+					throw new \InvalidArgumentException('Could not load a class that not inherit from Module');
 				}
 
 				$module->onCreate($module->getContext(), $module->getRequest());

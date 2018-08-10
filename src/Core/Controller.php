@@ -57,17 +57,18 @@
 
 		/**
 		 * @param Model|string $model
-		 * @throws RuntimeException Model already loaded
-		 * @return ?Model
+		 * @throws \InvalidArgumentException Could not load a class that not inherit from Model
+		 * @throws \RuntimeException The controller has already loaded a Model
+		 * @return Model
 		 */
-		public function loadModel($model): ?Model {
+		public function loadModel($model): Model {
 
 			if (!is_subclass_of($model, Model::class)){
-				return null;
+				throw new \InvalidArgumentException('Could not load a class that not inherit from Model');
 			}
 
 			if ($this->model !== null){
-				throw new \RuntimeException('Model already loaded');
+				throw new \RuntimeException('The controller has already loaded a Model');
 			}
 
 			if (is_string($model)){
@@ -85,12 +86,13 @@
 
 		/**
 		 * @param View|string $view
+		 * @throws \InvalidArgumentException Could not load a class that not inherit from View
 		 * @return ResponseInterface
 		 */
 		public function loadView($view): ResponseInterface {
 
 			if (!is_subclass_of($view, View::class)){
-				return new Response();
+				throw new \InvalidArgumentException('Could not load a class that not inherit from View');
 			}
 
 			if (is_string($view)){

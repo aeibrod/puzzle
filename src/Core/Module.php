@@ -46,12 +46,13 @@
 		/**
 		 * @param Controller|string $controller
 		 * @param string[] $slugs = []
-		 * @return ?Controller
+		 * @throws \InvalidArgumentException Could not load a class that not inherit from Controller
+		 * @return Controller
 		 */
-		public function loadController($controller, array $slugs = []): ?Controller {
+		public function loadController($controller, array $slugs = []): Controller {
 
 			if (!is_subclass_of($controller, Controller::class)){
-				return null;
+				throw new \InvalidArgumentException('Could not load a class that not inherit from Controller');
 			}
 
 			if (is_string($controller)){

@@ -4,6 +4,8 @@
 
 	use Puzzle\Component\Link\Link;
 
+	use Puzzle\Exception\ItemNotFoundException;
+
 	use Psr\Container\ContainerInterface;
 	use Psr\Http\Message\RequestInterface;
 	use Psr\Link\LinkInterface;
@@ -40,13 +42,13 @@
 
 		/**
 		 * @param string $id
-		 * @throws RuntimeException No entry was found
+		 * @throws Psr\Container\NotFoundExceptionInterface No entry was found
 		 * @return mixed
 		 */
 		public function get($id) {
 
 			if (!$this->has($id)){
-				throw new \RuntimeException('No entry was found');
+				throw new ItemNotFoundException('No entry was found');
 			}
 
 			return $this->entities[$id];

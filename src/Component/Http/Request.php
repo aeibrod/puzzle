@@ -113,7 +113,7 @@
 
 		/**
 		 * @param string $method
-		 * @throws InvalidArgumentException Invalid HTTP method
+		 * @throws \InvalidArgumentException Invalid HTTP method
 		 * @return ServerRequestInterface
 		 */
 		public function withMethod($method): ServerRequestInterface {

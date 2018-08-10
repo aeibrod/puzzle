@@ -15,6 +15,7 @@
 
 ### refactor
 
+ - add exception throwers
  - **core:** change lifecycle
  - **core:** change `matches` keyword to `slugs`
  - **http:** add the final `S` to `HTTP_METHODS` in `Puzzle\Component\Http\Message`
@@ -23,6 +24,6 @@
 
  - add changelog
 
-## Version 0.0.1 (2018-08-1)
+## Version 0.0.1 (August 1, 2018)
 
 First commit

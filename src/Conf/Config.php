@@ -2,6 +2,8 @@
 
 	namespace Puzzle\Conf;
 
+	use Puzzle\Exception\ItemNotFoundException;
+
 
 	class Config {
 
@@ -97,7 +99,7 @@
 
 		/**
 		 * @param string $key
-		 * @throws \RuntimeException No entry was found
+		 * @throws ItemNotFoundException No entry was found
 		 * @return mixed|mixed[]
 		 */
 		public function get(string $key) {
@@ -112,7 +114,7 @@
 				}
 
 				else {
-					throw new \RuntimeException('No entry was found');
+					throw new ItemNotFoundException('No entry was found');
 				}
 
 			}

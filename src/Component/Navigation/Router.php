@@ -169,12 +169,13 @@
 		/**
 		 * @param string $name
 		 * @param string[] $slugs = []
-		 * @return ?LinkInterface
+		 * @throws \InvalidArguementException The route does not exist
+		 * @return LinkInterface
 		 */
-		public function generate(string $name, array $slugs = []): ?LinkInterface {
+		public function generate(string $name, array $slugs = []): LinkInterface {
 
 			if (!array_key_exists(strtolower($name), $this->routes)){
-				return null;
+				throw new \InvalidArgumentException('The route does not exist');
 			}
 
 			return $this->routes[strtolower($name)]->generate($slugs);

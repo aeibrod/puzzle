@@ -51,7 +51,7 @@
 
 		/**
 		 * @param resource $resource = null
-		 * @throws InvalidArgumentException Stream must be instantiated with a valid resource
+		 * @throws \InvalidArgumentException Stream must be instantiated with a valid resource
 		 */
 		public function __construct($resource = null) {
 
@@ -84,7 +84,7 @@
 		/**
 		 * @param string $filename
 		 * @param string $mode = 'r+'
-		 * @throws InvalidArgumentException Stream must be instanciated with a valid resource
+		 * @throws \InvalidArgumentException Stream must be instanciated with a valid resource
 		 * @return StreamInterface
 		 */
 		public static function fromFile(string $filename, string $mode = 'r+'): StreamInterface {
@@ -153,7 +153,8 @@
 
 
 		/**
-		 * @throws RuntimeException
+		 * @throws \RuntimeException Stream is detached
+		 * @throws \RuntimeException Unable to get the position of the pointer
 		 * @return int
 		 */
 		public function tell(): int {
@@ -186,7 +187,8 @@
 
 		/**
 		 * @param int $length
-		 * @throws RuntimeException Stream is detached or not readable
+		 * @throws \RuntimeException Stream is detached
+		 * @throws \RuntimeException Stream is not readable
 		 * @return string
 		 */
 		public function read($length): string {
@@ -210,7 +212,8 @@
 		}
 
 		/**
-		 * @throws RuntimeException Stream is detached or not readable
+		 * @throws \RuntimeException Stream is detached
+		 * @throws \RuntimeException Stream is not readable
 		 * @return string
 		 */
 		public function getContents(): string {
@@ -236,7 +239,8 @@
 
 		/**
 		 * @param string $content
-		 * @throws RuntimeException Stream is detached or not writable
+		 * @throws \RuntimeException Stream is detached
+		 * @throws \RuntimeException Stream is not writable
 		 * @return int
 		 */
 		public function write($content): int {
@@ -264,7 +268,8 @@
 		/**
 		 * @param int $offset
 		 * @param int $whence = SEEK_SET
-		 * @throws RuntimeException Stream is detached or not seekable
+		 * @throws \RuntimeException Stream is detached
+		 * @throws \RuntimeException Stream is not seekable
 		 */
 		public function seek($offset, $whence = SEEK_SET): void {
 
@@ -286,7 +291,8 @@
 
 
 		/**
-		 * @throws RuntimeException Stream is detached or not seekable
+		 * @throws \RuntimeException Stream is detached
+		 * @throws \RuntimeException Stream is not seekable
 		 */
 		public function rewind(): void {
 			$this->seek(0);
@@ -332,7 +338,6 @@
 
 		/**
 		 * @param string $key = null
-		 * @throws RuntimeException
 		 * @return ?mixed
 		 */
 		public function getMetadata($key = null) {

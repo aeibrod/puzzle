@@ -95,9 +95,10 @@
 
 		/**
 		 * @param string[] $arguments = []
-		 * @return ?LinkInterface
+		 * @throws \InvalidArgumentException Unable to replace the slug
+		 * @return LinkInterface
 		 */
-		public function generate(array $arguments = []): ?LinkInterface {
+		public function generate(array $arguments = []): LinkInterface {
 
 			$uri = $this->expression;
 
@@ -111,7 +112,7 @@
 				}
 
 				if (!preg_match('/^' . $slug->getAcceptedChars() . '$/', $replace) && !$slug->isOptional()){
-					return null;
+					throw new \InvalidArgumentException('Unable to replace the slug');
 				}
 
 
