@@ -61,13 +61,6 @@
 			return $this->request;
 		}
 
-		/**
-		 * @return LinkInterface
-		 */
-		public function getBaseUrl(): LinkInterface {
-			return Link::baseUrl();
-		}
-
 
 		/**
 		 * @return string[]

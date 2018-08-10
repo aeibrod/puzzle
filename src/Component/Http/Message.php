@@ -9,12 +9,13 @@
 	abstract class Message implements MessageInterface {
 
 		/** @var string[] */
-		const HTTP_METHODS = [ 'GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH' ];
-
-		const HTTP_VERSIONS = [ '0.9', '1.0', '1.1', '2' ];
+		public const HTTP_METHODS = [ 'GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH' ];
 
 		/** @var string[] */
-		const HTTP_STATUS = [
+		public const HTTP_VERSIONS = [ '0.9', '1.0', '1.1', '2' ];
+
+		/** @var string[] */
+		public const HTTP_STATUS = [
 			100 => 'Continue',
 			101 => 'Switching Protocol',
 			102 => 'Processing',

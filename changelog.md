@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 0.0.2 (August ?, 2018)
+## Version 0.0.2 (August 10, 2018)
 
 ### feat
 
@@ -16,6 +16,7 @@
 ### refactor
 
  - add exception throwers
+ - remove useless methods and constants
  - **core:** change lifecycle
  - **core:** change `matches` keyword to `slugs`
  - **http:** add the final `S` to `HTTP_METHODS` in `Puzzle\Component\Http\Message`

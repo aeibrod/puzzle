@@ -10,7 +10,7 @@
 	class Uri implements UriInterface, Entity {
 
 		/** @var string[] */
-		const SCHEME_DEFAULT_PORT = [
+		public const SCHEME_DEFAULT_PORT = [
 			'file'   => null,
 			'ftp'    => 21,
 			'git'    => 9418,

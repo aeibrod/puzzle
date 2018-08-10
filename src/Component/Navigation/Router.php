@@ -15,7 +15,7 @@
 		/** @var RequestInterface */
 		protected $request;
 
-		/** @var mxied[] */
+		/** @var mixed[] */
 		protected $rules = [];
 
 		/** @var Route[] */

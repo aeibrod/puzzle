@@ -11,9 +11,6 @@
 	class Route {
 
 		/** @var string */
-		const DEFAULT_ACCEPTED_CHARS_PARAMETER = 'a-zA-Z0-9-_';
-
-		/** @var string */
 		protected const REGEX_SLUG = '/{[^}?]+(?:[?]){0,1}(?:[:][^}]+){0,1}}/';
 
 
