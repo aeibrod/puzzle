@@ -28,6 +28,22 @@
 
 
 		/**
+		 * @param Response $response
+		 */
+		public static function send(Response $response): void {
+
+			header('HTTP/' . $response->getProtocolVersion() . ' ' . $response->getStatusCode() . ' ' . $response->getReasonPhrase());
+
+			foreach ($response->getHeaders() as $header => $value){
+				header($header . ': ' . implode(', ', $value));
+			}
+
+			echo $response->getBody();
+
+		}
+
+
+		/**
 		 * @return int
 		 */
 		public function getStatusCode(): int {

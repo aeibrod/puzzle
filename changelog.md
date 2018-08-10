@@ -6,6 +6,7 @@
 
  - make configuration more flexible
  - **http:** add possibility to configure the stream in `Puzzle\Component\Http\Stream`
+ - **http:** add static `send()` method in `Puzzle\Component\Http\Response`
  - **navigation:** create navigation component
 
 ### refactor

@@ -2,6 +2,8 @@
 
 	namespace Puzzle\Core;
 
+	use Puzzle\Component\Http\Response;
+
 	use Psr\Http\Message\ServerRequestInterface;
 
 
@@ -61,17 +63,10 @@
 
 			}
 
-
 			$controller->setSlugs($slugs);
 			$response = $controller->onCreate($controller->getContext(), $controller->getRequest());
 
-			header('HTTP/' . $response->getProtocolVersion() . ' ' . $response->getStatusCode() . ' ' . $response->getReasonPhrase());
-
-			foreach ($response->getHeaders() as $header => $value){
-				header($header . ': ' . implode(', ', $value));
-			}
-
-			echo $response->getBody()->__toString();
+			Response::send($response);
 
 			return $controller;
 		}
