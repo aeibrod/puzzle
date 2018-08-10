@@ -9,6 +9,10 @@
  - **http:** add static `send()` method in `Puzzle\Component\Http\Response`
  - **navigation:** create navigation component
 
+### fix
+
+ - **core:** fix lifecycle execution
+
 ### refactor
 
  - **core:** change lifecycle

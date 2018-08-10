@@ -55,15 +55,14 @@
 			}
 
 			if (is_string($controller)){
-
 				$controller = new $controller();
-				$controller->onInitialize($this->context, $this->request);
-
-				$this->instancedControllers[] = $controller;
-
 			}
 
+			$this->instancedControllers[] = $controller;
+
+			$controller->onInitialize($this->context, $this->request);
 			$controller->setSlugs($slugs);
+
 			$response = $controller->onCreate($controller->getContext(), $controller->getRequest());
 
 			Response::send($response);

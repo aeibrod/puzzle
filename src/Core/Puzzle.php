@@ -17,7 +17,7 @@
 
 
 		/**
-		 * @param string[] $modules = []
+		 * @param Module[]|string[] $modules = []
 		 */
 		public function __construct(array $modules = []) {
 			$this->modules = $modules;
@@ -65,11 +65,11 @@
 				}
 
 				if (is_string($module)){
-
 					$this->modules[$key] = new $module();
-					$this->modules[$key]->onInitialize($this->context, $this->context->getRequest());
-
 				}
+
+				$this->modules[$key]->onInitialize($this->context, $this->context->getRequest());
+
 			}
 		}
 

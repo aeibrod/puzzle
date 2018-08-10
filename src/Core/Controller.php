@@ -72,11 +72,11 @@
 
 			if (is_string($model)){
 				$model = new $model();
-				$model->onInitialize($this->context, $this->request);
 			}
 
-
 			$this->model = $model;
+
+			$this->model->onInitialize($this->context, $this->request);
 			$this->model->setSlugs($this->slugs);
 			$this->model->onCreate($this->model->getContext(), $this->model->getRequest());
 
@@ -94,20 +94,18 @@
 			}
 
 			if (is_string($view)){
-
 				$view = new $view();
-				$view->onInitialize($this->context, $this->request);
-
-				$this->instancedViews[] = $view;
-
 			}
 
 			if ($this->model !== null){
 				$view->setModel($this->model);
 			}
 
+			$this->instancedViews[] = $view;
 
+			$view->onInitialize($this->context, $this->request);
 			$view->setSlugs($this->slugs);
+
 			$response = $view->onCreate($view->getContext(), $view->getRequest());
 
 			return $response;
