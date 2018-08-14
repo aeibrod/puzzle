@@ -2,6 +2,10 @@
 
 ## Version 0.0.3 (August ?, 2018)
 
+### feat
+
+ - **link:** add suport for command line interface
+
 ### fix
 
  - **navigation:** ignore matches if route does not correspond

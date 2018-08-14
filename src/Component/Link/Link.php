@@ -38,6 +38,11 @@
 		 * @return LinkInterface
 		 */
 		public static function baseUrl(): LinkInterface {
+
+			if (PHP_SAPI === 'cli'){
+				return new Link('http://localhost/');
+			}
+
 			return new Link(
 				$_SERVER['REQUEST_SCHEME'] . '://' .
 				$_SERVER['SERVER_NAME'] . '/'
