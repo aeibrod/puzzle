@@ -2,6 +2,7 @@
 <ruleset name="Standard for Puzzle" >
 
 	<file>./src</file>
+	<file>./dev</file>
 
 	<arg name="colors" />
 

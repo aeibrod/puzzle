@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 0.0.3 (August ?, 2018)
+
+### test
+
+ - **navigation:** add unitary tests
+
 ## Version 0.0.2 (August 10, 2018)
 
 ### feat
