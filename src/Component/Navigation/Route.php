@@ -79,6 +79,10 @@
 
 			$correspond = preg_match_all($this->regex, $request->getRequestTarget(), $matches, PREG_SET_ORDER);
 
+			if (!$correspond){
+				return false;
+			}
+
 			$arguments = array_slice($matches[0], 1);
 			$index = 0;
 
@@ -86,7 +90,7 @@
 				$this->slugs[$index++]->setValue($argument);
 			}
 
-			return $correspond;
+			return true;
 		}
 
 

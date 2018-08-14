@@ -2,6 +2,10 @@
 
 ## Version 0.0.3 (August ?, 2018)
 
+### fix
+
+ - **navigation:** ignore matches if route does not correspond
+
 ### test
 
  - **navigation:** add unitary tests
