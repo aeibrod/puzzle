@@ -94,7 +94,7 @@
 
 		public function close(): void {
 
-			if ($this->resource === null){
+			if (!isset($this->resource)){
 				return;
 			}
 
@@ -108,7 +108,7 @@
 		 */
 		public function detach() {
 
-			if ($this->resource === null){
+			if (!isset($this->resource)){
 				return null;
 			}
 
@@ -129,7 +129,7 @@
 		 */
 		public function getSize(): ?int {
 
-			if ($this->resource === null){
+			if (!isset($this->resource)){
 				return null;
 			}
 
@@ -304,7 +304,7 @@
 		 */
 		public function isReadable(): bool {
 
-			if ($this->resource === null){
+			if (!isset($this->resource)){
 				return false;
 			}
 
@@ -316,7 +316,7 @@
 		 */
 		public function isWritable(): bool {
 
-			if ($this->resource === null){
+			if (!isset($this->resource)){
 				return false;
 			}
 
@@ -328,7 +328,7 @@
 		 */
 		public function isSeekable(): bool {
 
-			if ($this->resource === null){
+			if (!isset($this->resource)){
 				return false;
 			}
 

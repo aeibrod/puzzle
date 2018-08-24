@@ -10,6 +10,7 @@ Version 0.0.3 (August ?, 2018)
 ### fix
 
  - **http:** use `$preserveHost` parameter in `Puzzle\Component\Http\Request`
+ - **http:** better way to know if stream is detached in `Puzzle\Component\Http\Stream`
  - **navigation:** ignore matches if route does not correspond
 
 ### test
