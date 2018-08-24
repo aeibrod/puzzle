@@ -6,6 +6,7 @@ Version 0.0.3 (August ?, 2018)
 ### feat
 
  - **link:** add suport for command line interface
+ - **link:** add `base()`, `index()` and `__toString()` methods
 
 ### fix
 

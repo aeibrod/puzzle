@@ -37,16 +37,23 @@
 		/**
 		 * @return LinkInterface
 		 */
-		public static function baseUrl(): LinkInterface {
+		public static function base(): LinkInterface {
 
 			if (PHP_SAPI === 'cli'){
-				return new Link('http://localhost/');
+				return new Link('http://localhost');
 			}
 
 			return new Link(
 				$_SERVER['REQUEST_SCHEME'] . '://' .
-				$_SERVER['SERVER_NAME'] . '/'
+				$_SERVER['SERVER_NAME']
 			);
+		}
+
+		/**
+		 * @return LinkInterface
+		 */
+		public static function index(): LinkInterface {
+			return new Link(Link::base() . '/');
 		}
 
 
@@ -77,6 +84,14 @@
 		 */
 		public function isTemplated(): bool {
 			return $this->templated;
+		}
+
+
+		/**
+		 * @return string
+		 */
+		public function __toString(): string {
+			return $this->href;
 		}
 
 	}

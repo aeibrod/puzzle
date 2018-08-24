@@ -121,7 +121,7 @@
 
 			}
 
-			return new Link(substr(Link::baseUrl()->getHref(), 0, -1) . $uri);
+			return new Link(Link::base() . $uri);
 		}
 
 
