@@ -38,13 +38,13 @@
 		 * @return EvolvableLinkInterface
 		 */
 		public function withoutRel($rel): EvolvableLinkInterface {
+			$new = clone $this;
 
-			if (!in_array($rel, $this->rels)){
-				return $this;
+			if (($key = array_search($rel, $new->rels)) !== false){
+				unset($new->rels[$key]);
+				$new->rels = array_values($new->rels);
 			}
 
-			$new = clone $this;
-			unset($new->rels[$rel]);
 			return $new;
 		}
 
@@ -71,7 +71,7 @@
 			}
 
 			$new = clone $this;
-			unset($this->attributes[$attribute]);
+			unset($new->attributes[$attribute]);
 			return $new;
 		}
 
