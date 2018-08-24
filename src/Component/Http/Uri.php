@@ -101,7 +101,7 @@
 
 			$authority .= $this->host;
 
-			if ($this->port !== null && $this->port !== self::SCHEME_DEFAULT_PORT[$this->scheme]){
+			if ($this->port !== null && ($this->scheme === '' ? true : $this->port !== self::SCHEME_DEFAULT_PORT[$this->scheme])){
 				$authority .= ':' . $this->port;
 			}
 
@@ -115,7 +115,7 @@
 
 			$result = $this->userName;
 
-			if ($this->userPass !== ''){
+			if ($this->userPass !== '' && $this->userPass !== null){
 				$result .= ':' . $this->userPass;
 			}
 
