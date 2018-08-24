@@ -67,6 +67,34 @@
 
 
 		/**
+		 * @param UriInterface $uri
+		 */
+		private function updateHostFromUri(UriInterface $uri) {
+
+			$host = $uri->getHost();
+			$port = $uri->getPort();
+
+			if ($host === ''){
+				return;
+			}
+
+			if ($port !== null){
+				$host .= ':' . $port;
+			}
+
+
+			if (!$this->hasHeader('host')){
+				$this->headersName['host'] = 'Host';
+			}
+
+			$header = $this->headersName['host'];
+
+			$this->headers = [$header => [$host]] + $this->headers;
+
+		}
+
+
+		/**
 		 * @return string
 		 */
 		public function getRequestTarget(): string {
@@ -143,6 +171,11 @@
 		public function withUri(UriInterface $uri, $preserveHost = false): ServerRequestInterface {
 			$new = clone $this;
 			$new->uri = $uri;
+
+			if (!$preserveHost){
+				$new->updateHostFromUri($uri);
+			}
+
 			return $new;
 		}
 

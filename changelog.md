@@ -1,6 +1,7 @@
 # Changelog
 
-## Version 0.0.3 (August ?, 2018)
+Version 0.0.3 (August ?, 2018)
+------------------------------
 
 ### feat
 
@@ -8,13 +9,15 @@
 
 ### fix
 
+ - **http:** use `$preserveHost` parameter in `Puzzle\Component\Http\Request`
  - **navigation:** ignore matches if route does not correspond
 
 ### test
 
  - **navigation:** add unitary tests
 
-## Version 0.0.2 (August 10, 2018)
+Version 0.0.2 (August 10, 2018)
+-------------------------------
 
 ### feat
 
@@ -39,6 +42,7 @@
 
  - add changelog
 
-## Version 0.0.1 (August 1, 2018)
+Version 0.0.1 (August 1, 2018)
+------------------------------
 
 First commit
