@@ -30,7 +30,7 @@
 
 
 
-		public function testAny(): void {
+		public function testAny1(): void {
 
 			$router = new Router();
 			$router->setRequest($this->request->withMethod('get'));
@@ -47,7 +47,60 @@
 
 		}
 
-		public function testGet(): void {
+		public function testAny2(): void {
+
+			$router = new Router();
+			$router->setRequest($this->request->withMethod('get'));
+
+			$verify = false;
+
+			$router->match('any', new Route('/'), function() use (&$verify){
+				$verify = true;
+			});
+
+			$router->execute();
+
+			$this->assertTrue($verify);
+
+		}
+
+		public function testAny3(): void {
+
+			$router = new Router();
+			$router->setRequest($this->request->withMethod('get'));
+
+			$verify = false;
+
+			$router->match('*', new Route('/'), function() use (&$verify){
+				$verify = true;
+			});
+
+			$router->execute();
+
+			$this->assertTrue($verify);
+
+		}
+
+
+
+		public function testGet1(): void {
+
+			$router = new Router();
+			$router->setRequest($this->request->withMethod('GET'));
+
+			$verify = false;
+
+			$router->get(new Route('/'), function() use (&$verify){
+				$verify = true;
+			});
+
+			$router->execute();
+
+			$this->assertTrue($verify);
+
+		}
+
+		public function testGet2(): void {
 
 			$router = new Router();
 			$router->setRequest($this->request->withMethod('GET'));
@@ -64,7 +117,43 @@
 
 		}
 
-		public function testHead(): void {
+
+
+		public function testHead1(): void {
+
+			$router = new Router();
+			$router->setRequest($this->request->withMethod('HEAD'));
+
+			$verify = false;
+
+			$router->head(new Route('/'), function() use (&$verify){
+				$verify = true;
+			});
+
+			$router->execute();
+
+			$this->assertTrue($verify);
+
+		}
+
+		public function testHead2(): void {
+
+			$router = new Router();
+			$router->setRequest($this->request->withMethod('HEAD'));
+
+			$verify = false;
+
+			$router->get(new Route('/'), function() use (&$verify){
+				$verify = true;
+			});
+
+			$router->execute();
+
+			$this->assertTrue($verify);
+
+		}
+
+		public function testHead3(): void {
 
 			$router = new Router();
 			$router->setRequest($this->request->withMethod('HEAD'));
@@ -81,7 +170,43 @@
 
 		}
 
-		public function testPost(): void {
+		public function testHead4(): void {
+
+			$router = new Router();
+			$router->setRequest($this->request->withMethod('HEAD'));
+
+			$verify = false;
+
+			$router->match('get', new Route('/'), function() use (&$verify){
+				$verify = true;
+			});
+
+			$router->execute();
+
+			$this->assertTrue($verify);
+
+		}
+
+
+
+		public function testPost1(): void {
+
+			$router = new Router();
+			$router->setRequest($this->request->withMethod('POST'));
+
+			$verify = false;
+
+			$router->post(new Route('/'), function() use (&$verify){
+				$verify = true;
+			});
+
+			$router->execute();
+
+			$this->assertTrue($verify);
+
+		}
+
+		public function testPost2(): void {
 
 			$router = new Router();
 			$router->setRequest($this->request->withMethod('POST'));
@@ -98,7 +223,26 @@
 
 		}
 
-		public function testPut(): void {
+
+
+		public function testPut1(): void {
+
+			$router = new Router();
+			$router->setRequest($this->request->withMethod('put'));
+
+			$verify = false;
+
+			$router->put(new Route('/'), function() use (&$verify){
+				$verify = true;
+			});
+
+			$router->execute();
+
+			$this->assertTrue($verify);
+
+		}
+
+		public function testPut2(): void {
 
 			$router = new Router();
 			$router->setRequest($this->request->withMethod('put'));
@@ -115,7 +259,26 @@
 
 		}
 
-		public function testDelete(): void {
+
+
+		public function testDelete1(): void {
+
+			$router = new Router();
+			$router->setRequest($this->request->withMethod('delete'));
+
+			$verify = false;
+
+			$router->delete(new Route('/'), function() use (&$verify){
+				$verify = true;
+			});
+
+			$router->execute();
+
+			$this->assertTrue($verify);
+
+		}
+
+		public function testDelete2(): void {
 
 			$router = new Router();
 			$router->setRequest($this->request->withMethod('delete'));
@@ -132,14 +295,16 @@
 
 		}
 
-		public function testConnect(): void {
+
+
+		public function testOptions1(): void {
 
 			$router = new Router();
-			$router->setRequest($this->request->withMethod('connect'));
+			$router->setRequest($this->request->withMethod('opTIOns'));
 
 			$verify = false;
 
-			$router->match('CONNECT', new Route('/'), function() use (&$verify){
+			$router->options(new Route('/'), function() use (&$verify){
 				$verify = true;
 			});
 
@@ -149,7 +314,7 @@
 
 		}
 
-		public function testOptions(): void {
+		public function testOptions2(): void {
 
 			$router = new Router();
 			$router->setRequest($this->request->withMethod('opTIOns'));
@@ -166,14 +331,16 @@
 
 		}
 
-		public function testTrace(): void {
+
+
+		public function testPatch1(): void {
 
 			$router = new Router();
-			$router->setRequest($this->request->withMethod('TRAce'));
+			$router->setRequest($this->request->withMethod('PaTcH'));
 
 			$verify = false;
 
-			$router->match('trACE', new Route('/'), function() use (&$verify){
+			$router->patch(new Route('/'), function() use (&$verify){
 				$verify = true;
 			});
 
@@ -183,7 +350,7 @@
 
 		}
 
-		public function testPatch(): void {
+		public function testPatch2(): void {
 
 			$router = new Router();
 			$router->setRequest($this->request->withMethod('PaTcH'));

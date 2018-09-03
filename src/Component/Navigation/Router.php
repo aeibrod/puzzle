@@ -4,13 +4,24 @@
 
 	use Puzzle\Core\Entity;
 
-	use Puzzle\Component\Http\Message;
-
 	use Psr\Http\Message\RequestInterface;
 	use Psr\Link\LinkInterface;
 
 
 	class Router implements Entity {
+
+		/** @var string[][] */
+		public const HTTP_AVAILABLE_METHODS = [
+			'ANY'     => [ 'GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH' ],
+			'GET'     => [ 'GET', 'HEAD' ],
+			'HEAD'    => [ 'HEAD' ],
+			'POST'    => [ 'POST' ],
+			'PUT'     => [ 'PUT' ],
+			'DELETE'  => [ 'DELETE' ],
+			'OPTIONS' => [ 'OPTIONS' ],
+			'PATCH'   => [ 'PATCH' ]
+		];
+
 
 		/** @var RequestInterface */
 		protected $request;
@@ -40,14 +51,15 @@
 
 
 		/**
-		 * @param string|string[] $methods
+		 * @param string|string[] $methods Must be a key or keys of HTTP_AVAILABLE_METHODS
 		 * @param Route $route
 		 * @param callable $callback
+		 * @throws \InvalidArgumentException HTTP method is invalid
 		 */
 		public function match($methods, Route $route, callable $callback): void {
 
 			if ($methods === '*'){
-				$methods = Message::HTTP_METHODS;
+				$methods = 'ANY';
 			}
 
 			if (is_string($methods)){
@@ -56,10 +68,20 @@
 
 
 			foreach ($methods as $method){
-				$this->rules[strtoupper($method)][] = [
-					'route' => $route,
-					'callback' => $callback
-				];
+
+				if (!isset(self::HTTP_AVAILABLE_METHODS[strtoupper($method)])){
+					throw new \InvalidArguementException('HTTP method is invalid');
+				}
+
+				$availables = self::HTTP_AVAILABLE_METHODS[strtoupper($method)];
+
+				foreach ($availables as $available){
+					$this->rules[$available][] = [
+						'route' => $route,
+						'callback' => $callback
+					];
+				}
+
 			}
 
 			if ($route->canBeGenerated()){
@@ -82,7 +104,7 @@
 		 * @param callable $callback
 		 */
 		public function get(Route $route, callable $callback): void {
-			$this->match('get', $route, $callback);
+			$this->match([ 'get', 'head' ], $route, $callback);
 		}
 
 		/**
@@ -121,24 +143,8 @@
 		 * @param Route $route
 		 * @param callable $callback
 		 */
-		public function connect(Route $route, callable $callback): void {
-			$this->match('connect', $route, $callback);
-		}
-
-		/**
-		 * @param Route $route
-		 * @param callable $callback
-		 */
 		public function options(Route $route, callable $callback): void {
 			$this->match('options', $route, $callback);
-		}
-
-		/**
-		 * @param Route $route
-		 * @param callable $callback
-		 */
-		public function trace(Route $route, callable $callback): void {
-			$this->match('trace', $route, $callback);
 		}
 
 		/**
