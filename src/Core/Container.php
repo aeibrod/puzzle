@@ -11,7 +11,7 @@
 	use Psr\Link\LinkInterface;
 
 
-	class Context implements ContainerInterface {
+	class Container implements ContainerInterface {
 
 		/** @var mixed[] */
 		protected $entities = [];

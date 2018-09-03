@@ -3,7 +3,7 @@
 	namespace Puzzle\Component\Render;
 
 	use Puzzle\Core\Model;
-	use Puzzle\Core\Context;
+	use Puzzle\Core\Container;
 
 	use Puzzle\Component\Http\Response;
 
@@ -12,8 +12,8 @@
 
 	class PhpRenderer {
 
-		/** @var Context */
-		protected $context;
+		/** @var Container */
+		protected $container;
 
 		/** @var Model */
 		protected $model;
@@ -36,8 +36,8 @@
 
 			$renderer = new PhpRenderer();
 
-			if ($from->getContext() !== null){
-				$renderer->setContext($from->getContext());
+			if ($from->getContainer() !== null){
+				$renderer->setContainer($from->getContainer());
 			}
 
 			if ($from->getModel() !== null){
@@ -51,11 +51,11 @@
 
 
 		/**
-		 * @param Context $context
+		 * @param Container $container
 		 * @return PhpRenderer
 		 */
-		public function setContext(Context $context): PhpRenderer {
-			$this->context = $context;
+		public function setContainer(Container $container): PhpRenderer {
+			$this->container = $container;
 			return $this;
 		}
 
@@ -110,10 +110,10 @@
 
 
 		/**
-		 * @return ?Context
+		 * @return ?Container
 		 */
-		public function getContext(): ?Context {
-			return $this->context;
+		public function getContainer(): ?Container {
+			return $this->container;
 		}
 
 		/**
@@ -196,7 +196,7 @@
 						if ($template . '.' . $extension === $file)
 						{
 
-							$context = $this->context;
+							$container = $this->container;
 							$model   = $this->model;
 							$slugs = $this->slugs;
 

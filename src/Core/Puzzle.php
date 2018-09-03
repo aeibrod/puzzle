@@ -12,8 +12,8 @@
 		/** @var string[] */
 		protected $modules = [];
 
-		/** @var Context */
-		protected $context;
+		/** @var Container */
+		protected $container;
 
 
 		/**
@@ -47,15 +47,15 @@
 		 */
 		public function init(): void {
 
-			$this->context = new Context();
+			$this->container = new Container();
 
 			$request = Request::fromGlobals();
 			$router = new Router();
 
 			$router->setRequest($request);
 
-			$this->context->register($request);
-			$this->context->register($router);
+			$this->container->register($request);
+			$this->container->register($router);
 
 
 			$this->initModules();
@@ -76,7 +76,7 @@
 					$this->modules[$key] = new $module();
 				}
 
-				$this->modules[$key]->onInitialize($this->context, $this->context->getRequest());
+				$this->modules[$key]->onInitialize($this->container, $this->container->getRequest());
 
 			}
 		}
@@ -92,14 +92,14 @@
 					throw new \InvalidArgumentException('Could not load a class that not inherit from Module');
 				}
 
-				$module->onCreate($module->getContext(), $module->getRequest());
+				$module->onCreate($module->getContainer(), $module->getRequest());
 
 			}
 
 		}
 
 		public function exec(): void {
-			$this->context->get('router')->execute();
+			$this->container->get('router')->execute();
 		}
 
 	}

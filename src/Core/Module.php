@@ -9,8 +9,8 @@
 
 	abstract class Module {
 
-		/** @var Context */
-		protected $context;
+		/** @var Container */
+		protected $container;
 
 		/** @var ServerRequestInterface */
 		protected $request;
@@ -20,11 +20,11 @@
 
 
 		/**
-		 * @param Context $context
+		 * @param Container $container
 		 * @param ServerRequestInterface $request
 		 */
-		public function onInitialize(Context $context, ServerRequestInterface $request): void {
-			$this->context = $context;
+		public function onInitialize(Container $container, ServerRequestInterface $request): void {
+			$this->container = $container;
 			$this->request = $request;
 		}
 
@@ -37,10 +37,10 @@
 		}
 
 		/**
-		 * @param Context $context
+		 * @param Container $container
 		 * @param ServerRequestInterface $request
 		 */
-		public abstract function onCreate(Context $context, ServerRequestInterface $request): void;
+		public abstract function onCreate(Container $container, ServerRequestInterface $request): void;
 
 
 		/**
@@ -61,10 +61,10 @@
 
 			$this->instancedControllers[] = $controller;
 
-			$controller->onInitialize($this->context, $this->request);
+			$controller->onInitialize($this->container, $this->request);
 			$controller->setSlugs($slugs);
 
-			$response = $controller->onCreate($controller->getContext(), $controller->getRequest());
+			$response = $controller->onCreate($controller->getContainer(), $controller->getRequest());
 
 			Response::send($response);
 
@@ -73,10 +73,10 @@
 
 
 		/**
-		 * @return ?Context
+		 * @return ?Container
 		 */
-		public function getContext(): ?Context {
-			return $this->context;
+		public function getContainer(): ?Container {
+			return $this->container;
 		}
 
 		/**

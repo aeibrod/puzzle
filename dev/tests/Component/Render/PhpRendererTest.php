@@ -2,23 +2,23 @@
 
 	namespace Puzzle\Tests\Component\Render;
 
-	use Puzzle\Core\Context;
+	use Puzzle\Core\Container;
 	use Puzzle\Core\Model;
 
 	use Puzzle\Component\Render\PhpRenderer;
 
 	class PhpRendererTest extends \PHPUnit\Framework\TestCase {
 
-		public function testContextSetterAndGetter(): void {
+		public function testContainerSetterAndGetter(): void {
 
 			$render = new PhpRenderer();
-			$context = $this->createMock(Context::class);
+			$container = $this->createMock(Container::class);
 
-			$this->assertNull($render->getContext());
+			$this->assertNull($render->getContainer());
 
-			$render->setContext($context);
+			$render->setContainer($container);
 
-			$this->assertSame($render->getContext(), $context);
+			$this->assertSame($render->getContainer(), $container);
 
 		}
 

@@ -10,8 +10,8 @@
 
 	abstract class Controller {
 
-		/** @var Context */
-		protected $context;
+		/** @var Container */
+		protected $container;
 
 		/** @var ServerRequestInterface */
 		protected $request;
@@ -27,11 +27,11 @@
 
 
 		/**
-		 * @param Context $context
+		 * @param Container $container
 		 * @param ServerRequestInterface $request
 		 */
-		public function onInitialize(Context $context, ServerRequestInterface $request): void {
-			$this->context = $context;
+		public function onInitialize(Container $container, ServerRequestInterface $request): void {
+			$this->container = $container;
 			$this->request = $request;
 		}
 
@@ -48,11 +48,11 @@
 		}
 
 		/**
-		 * @param Context $context
+		 * @param Container $container
 		 * @param ServerRequestInterface $request
 		 * @return ResponseInterface
 		 */
-		public abstract function onCreate(Context $context, ServerRequestInterface $request): ResponseInterface;
+		public abstract function onCreate(Container $container, ServerRequestInterface $request): ResponseInterface;
 
 
 		/**
@@ -77,9 +77,9 @@
 
 			$this->model = $model;
 
-			$this->model->onInitialize($this->context, $this->request);
+			$this->model->onInitialize($this->container, $this->request);
 			$this->model->setSlugs($this->slugs);
-			$this->model->onCreate($this->model->getContext(), $this->model->getRequest());
+			$this->model->onCreate($this->model->getContainer(), $this->model->getRequest());
 
 			return $this->model;
 		}
@@ -105,10 +105,10 @@
 
 			$this->instancedViews[] = $view;
 
-			$view->onInitialize($this->context, $this->request);
+			$view->onInitialize($this->container, $this->request);
 			$view->setSlugs($this->slugs);
 
-			$response = $view->onCreate($view->getContext(), $view->getRequest());
+			$response = $view->onCreate($view->getContainer(), $view->getRequest());
 
 			return $response;
 		}
@@ -123,10 +123,10 @@
 
 
 		/**
-		 * @return ?Context
+		 * @return ?Container
 		 */
-		public function getContext(): ?Context {
-			return $this->context;
+		public function getContainer(): ?Container {
+			return $this->container;
 		}
 
 		/**

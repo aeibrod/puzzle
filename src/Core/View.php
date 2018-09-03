@@ -10,8 +10,8 @@
 
 	abstract class View {
 
-		/** @var Context */
-		protected $context;
+		/** @var Container */
+		protected $container;
 
 		/** @var ServerRequestInterface */
 		protected $request;
@@ -24,22 +24,22 @@
 
 
 		/**
-		 * @param Context $context
+		 * @param Container $container
 		 * @param ServerRequestInterface $request
 		 */
-		public function onInitialize(Context $context, ServerRequestInterface $request): void {
-			$this->context = $context;
+		public function onInitialize(Container $container, ServerRequestInterface $request): void {
+			$this->container = $container;
 			$this->request = $request;
 		}
 
 		public function onDestroy(): void { }
 
 		/**
-		 * @param Context $context
+		 * @param Container $container
 		 * @param ServerRequestInterface $request
 		 * @return ResponseInterface
 		 */
-		public abstract function onCreate(Context $context, ServerRequestInterface $request): ResponseInterface;
+		public abstract function onCreate(Container $container, ServerRequestInterface $request): ResponseInterface;
 
 
 		/**
@@ -58,10 +58,10 @@
 
 
 		/**
-		 * @return ?Context
+		 * @return ?Container
 		 */
-		public function getContext(): ?Context {
-			return $this->context;
+		public function getContainer(): ?Container {
+			return $this->container;
 		}
 
 		/**
