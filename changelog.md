@@ -1,7 +1,9 @@
 # Changelog
 
-Version 0.0.3 (August ?, 2018)
+Version 0.0.3
 ------------------------------
+
+> September 3, 2018
 
 ### feat
 
@@ -18,12 +20,20 @@ Version 0.0.3 (August ?, 2018)
 
 ### test
 
+ - **core:** add unitary tests
  - **http:** add unitary tests
  - **link:** add unitary tests
  - **navigation:** add unitary tests
+ - **render:** add unitary tests
 
-Version 0.0.2 (August 10, 2018)
+### docs
+
+ - update changelog
+
+Version 0.0.2
 -------------------------------
+
+> August 10, 2018
 
 ### feat
 
@@ -48,7 +58,9 @@ Version 0.0.2 (August 10, 2018)
 
  - add changelog
 
-Version 0.0.1 (August 1, 2018)
+Version 0.0.1
 ------------------------------
+
+> August 1, 2018
 
 First commit
