@@ -84,7 +84,7 @@
 
 			}
 
-			if ($route->canBeGenerated()){
+			if ($route->hasName()){
 				$this->routes[strtolower($route->getName())] = $route;
 			}
 

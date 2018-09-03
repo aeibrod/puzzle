@@ -66,7 +66,7 @@
 		/**
 		 * @return bool
 		 */
-		public function canBeGenerated(): bool {
+		public function hasName(): bool {
 			return $this->name !== '';
 		}
 

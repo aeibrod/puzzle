@@ -160,13 +160,13 @@
 
 
 
-		public function testCanBeGenerated(): void {
+		public function testHasName(): void {
 
 			$route1 = new Route('/', 'home');
 			$route2 = new Route('/');
 
-			$this->assertTrue($route1->canBeGenerated());
-			$this->assertFalse($route2->canBeGenerated());
+			$this->assertTrue($route1->hasName());
+			$this->assertFalse($route2->hasName());
 
 		}
 
