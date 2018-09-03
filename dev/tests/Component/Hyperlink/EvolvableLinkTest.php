@@ -1,8 +1,8 @@
 <?php
 
-	namespace Puzzle\Tests\Component\Link;
+	namespace Puzzle\Tests\Component\Hyperlink;
 
-	use Puzzle\Component\Link\EvolvableLink;
+	use Puzzle\Component\Hyperlink\EvolvableLink;
 
 
 	class EvolvableLinkTest extends \PHPUnit\Framework\TestCase {

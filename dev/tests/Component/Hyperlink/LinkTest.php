@@ -1,8 +1,8 @@
 <?php
 
-	namespace Puzzle\Tests\Component\Link;
+	namespace Puzzle\Tests\Component\Hyperlink;
 
-	use Puzzle\Component\Link\Link;
+	use Puzzle\Component\Hyperlink\Link;
 
 
 	class LinkTest extends \PHPUnit\Framework\TestCase {

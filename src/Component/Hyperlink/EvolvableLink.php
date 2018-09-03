@@ -1,6 +1,6 @@
 <?php
 
-	namespace Puzzle\Component\Link;
+	namespace Puzzle\Component\Hyperlink;
 
 	use Psr\Link\EvolvableLinkInterface;
 

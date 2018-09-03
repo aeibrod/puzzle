@@ -2,7 +2,7 @@
 
 	namespace Puzzle\Component\Navigation;
 
-	use Puzzle\Component\Link\Link;
+	use Puzzle\Component\Hyperlink\Link;
 
 	use Psr\Http\Message\RequestInterface;
 	use Psr\Link\LinkInterface;
